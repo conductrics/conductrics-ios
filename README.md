@@ -1,6 +1,6 @@
 # Conductrics API Wrapper for Objective-C / iOS / iPhone / iPad
 
-This is an Objective-C plugin for the Conductrics service, which provides an API for bandit-style optimization, dynamic targeting, and A/B testing. 
+This is an Objective-C wrapper for the Conductrics service, which provides an API for bandit-style optimization, dynamic targeting, and A/B testing. 
 
 We'll proceed here assuming that you are at familiar with the basic idea of the service. If not, please see http://conductrics.com for information about the service itself. Thanks!
 
