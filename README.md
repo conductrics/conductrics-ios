@@ -42,8 +42,10 @@ Sign up for a developer account at http://conductrics.com if you don't have one 
 Now you can import the wrapper and start using it in your code:
 
 ```objective-c
-#import <ConductricsAPI/ConductricsAPI.h>
+#import "ConductricsAPI.h"
 ```
+
+If you want, you can select the files you just added and then do File > New > Folder from Selection and put them in a folder called ConductricsAPI or something.
 
 ## Basic Usage
 
