@@ -29,13 +29,16 @@
 - (id)initWithOwner:(NSString *)aOwnerCode apiKey:(NSString *)aApiKey {
     self = [super init];
     if (self) {
-        // defaults
-        self.baseUrl = defaultBaseUrl;
-        self.timeoutInterval = defaultTimeoutInterval;
-        self.sessionId = [[[UIDevice currentDevice] identifierForVendor] UUIDString];
         // passed in
         self.apiKey = aApiKey;
         self.ownerCode = aOwnerCode;
+        // defaults
+        self.baseUrl = defaultBaseUrl;
+        self.timeoutInterval = defaultTimeoutInterval;
+        // default sessionId to stable identifier in iOS 6 and later
+        if ([[UIDevice currentDevice] respondsToSelector:@selector(identifierForVendor)]) {
+            self.sessionId = [[[UIDevice currentDevice] identifierForVendor] UUIDString];
+        }
     }
     return self;
 }
