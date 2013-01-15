@@ -30,6 +30,12 @@
 // multi-decision-point case
 - (void)decisionFromAgent:(NSString *)agentCode withChoices:(NSString *)choices atPoint:(NSString *)pointCode
         completionHandler:(void (^)(NSString *decision, NSString *err))callbackBlock;
+// multi-decisions case
+- (void)decisionsFromAgent:(NSString *)agentCode withChoices:(NSString *)choices
+         completionHandler:(void (^)(NSDictionary *decisions, NSString *err))callbackBlock;
+// multi-decisions with point
+- (void)decisionsFromAgent:(NSString *)agentCode withChoices:(NSString *)choices atPoint:(NSString *)pointCode
+         completionHandler:(void (^)(NSDictionary *decisions, NSString *err))callbackBlock;
 
 // API for Rewards
 // simplest case - all you know is agent code

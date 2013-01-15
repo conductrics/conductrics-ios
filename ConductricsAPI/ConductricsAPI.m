@@ -38,6 +38,8 @@
         // default sessionId to stable identifier in iOS 6 and later
         if ([[UIDevice currentDevice] respondsToSelector:@selector(identifierForVendor)]) {
             self.sessionId = [[[UIDevice currentDevice] identifierForVendor] UUIDString];
+        } else {
+            self.sessionId = nil;
         }
     }
     return self;
@@ -46,9 +48,10 @@
 // Special setter for sessionId - if set to an explicit nil, create a UUID
 -(void)setSessionId:(NSString *)newId {
     if (newId == nil) {
-        newId = (__bridge NSString*)CFUUIDCreateString(nil, CFUUIDCreate(nil));
+        sessionId = [[[NSUUID alloc] init] UUIDString];
+    } else {
+        sessionId = newId;
     }
-    sessionId = newId;
 }
 
 // API for Decisions
@@ -86,6 +89,49 @@
               return callbackBlock(returnedDecisionCode, nil); // TODO - should we return session id?
           }];
 }
+
+- (void)decisionsFromAgent:(NSString *)agentCode withChoices:(NSString *)choices completionHandler:(void (^)(NSDictionary *decisions, NSString *err))callbackBlock {
+    return [self decisionsFromAgent:agentCode withChoices:choices atPoint:nil completionHandler:callbackBlock];
+}
+- (void)decisionsFromAgent:(NSString *)agentCode withChoices:(NSString *)choices atPoint:(NSString *)pointCode completionHandler:(void (^)(NSDictionary *decisions, NSString *err))callbackBlock {
+
+    // Compose url to talk to conductrics server
+    NSMutableString *urlString = [NSMutableString stringWithFormat:@"%@/%@/%@/decisions", baseUrl, ownerCode, agentCode];
+    if (choices != nil) [urlString appendFormat:@"/%@", choices];
+    
+    // Set up url request with conductrics-specific headers
+    NSMutableURLRequest *request = [self urlRequestForURL:urlString];
+    if (pointCode != nil) [request setValue:pointCode forHTTPHeaderField: @"x-mpath-point"];
+    
+    [self fireUrlRequest:request
+          requestHandler: ^(NSDictionary *returned, NSString *err) {
+              // Bail now if there were any errors
+              if (err != nil) {
+                  NSMutableDictionary *fallbackDecisions = [[NSMutableDictionary alloc] init];
+                  NSArray *parts = [choices componentsSeparatedByString:@"/"];
+                  for (id object in parts) {
+                      NSArray *decisionParts = [object componentsSeparatedByString:@":"];
+                      if ([decisionParts count] >= 2) {
+                           NSString *fallbackDecision = [decisionParts[1] componentsSeparatedByString:@","][0];
+                          [fallbackDecisions setValue:[NSDictionary dictionaryWithObject:fallbackDecision forKey:@"code"] forKey:decisionParts[0]];
+                      } else {
+                          NSString *fallbackDecision = [decisionParts[0] componentsSeparatedByString:@","][0];
+                          NSString *decisionCode = [NSString stringWithFormat:@"decision-%d", [[fallbackDecisions allKeys] count] + 1];
+                          [fallbackDecisions setValue:[NSDictionary dictionaryWithObject:fallbackDecision forKey:@"code"] forKey:decisionCode];
+                      }
+                  }
+                  return callbackBlock(fallbackDecisions, err);
+              }
+              
+              // Get the stuff we want from the returned object from the server
+              NSDictionary *returnedDecisions = [[NSDictionary alloc]initWithDictionary:[returned valueForKey:@"decisions"] copyItems:YES];
+              
+              // Yay, success!
+              return callbackBlock(returnedDecisions, nil);
+          }];
+
+}
+
 
 // API for Rewards
 // simplest case - all you know is agent code

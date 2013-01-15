@@ -125,6 +125,47 @@ You might want to "lock" the agent on the Conducrics side so that you can test o
 
 Just keep in mind that this will affect all users that hit the agent (there's no facility right now to pause selectively for certain IP's or device IDs--would that be useful to you?).
 
+### Multi-Faceted Agents
+
+In some cases, you may want to make more than one "decision" within your app. The Conductrics service provides full support for "Multi-Faceted" agents. 
+
+PLEASE read the "Multi-Faceted Agents" section of the Conductrics Docs online (available in the web-based admin console) for a conceptual overview.
+
+###### Using Multiple Decision Points
+You can define more than one decision point for an agent. Conceptually, each point represents a key "place" or "moment" in your app. In practice, the points would most likely correlate to views (eg, if your app has two different views that each have something for Conductrics to try out, that would be two decision points), though that is not a requirement.
+
+To use multiple decision points, use **decisionFromAgent:withChoices:atPoint**, which gives you an opportunity to provide a point code. You may have specified this point code using the web-based Conductrics admin console, or you can just make up a new point code (in which case Conductrics will create the point "on the fly" the first time your code runs).
+
+```objective-c
+[conductrics decisionFromAgent:@"ios-example-agent" withChoices:@"a,b" atPoint:@"high-scores"
+    completionHandler: ^(NSString *decision, NSString *err) {
+      // Handle decision here (see earlier example)
+    }];
+```
+
+###### Using Multiple Decisions
+Sometimes you want to make more than one decision at the same moment. People often call this a **Multivariate** or MVT type scenario.
+
+To use multiple decisions in the same point, use **decisionsFromAgent:** (note the "decisions" rather than "decision" in the name there).
+
+Rather than expressing your choices as a simple comma-separated list as we saw earlier, instead use the form "name:choice,choice/name:choice,choice" as shown below. (We realize that the notation looks a bit odd in this context, but we are using it here to retain parity with the underlying HTTP API -- feedback is welcome on this point.) 
+
+The completionHandler will be passed a NSDictionary (rather than a single NSString). The dictionary will contain a sub-object for each decision, keyed by the decision code. Each sub-object will contain a **code**, which is an NSString you can use to adjust your app accordingly.
+
+```objective-c
+[conductrics decisionsFromAgent:@"ios-example-agent-multi" withChoices:@"color:red,blue/size:sm,md,lg"
+     completionHandler: ^(NSDictionary *decisions, NSString *err) {
+        // The selected choices are returned in the dictionary
+        NSString *color = [decisions valueForKeyPath:@"color.code"];
+        NSString *size = [decisions valueForKeyPath:@"size.code"];
+        // Do whatever is appropriate...
+    }];
+```
+
+Note that 
+
+If the wrapper can't reach the Conductrics server (see Error Handling and Timeouts above), it will parse withChoices string to construct an appropriate "fallback" object, which will be passed to your completionHandler as if it had been made normally over the wire.
+
 ## Sending "rewards" to the agent when goals are reached
 
 We're almost done. But to make the project meaninfgul, we need to let the Conductrics agent know when the application's goals are reached.

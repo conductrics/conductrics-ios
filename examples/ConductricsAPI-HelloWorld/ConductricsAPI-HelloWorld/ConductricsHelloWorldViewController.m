@@ -23,10 +23,18 @@
 
     [Conductrics decisionFromAgent:@"ios-example-agent" withChoices:@"a,b"
          completionHandler: ^(NSString *decision, NSString *err) {
-             NSLog(@"Decision is '%@' - error: %@ (null is good)", decision, err);
              self.decisionLabel.text = decision;
              self.errorLabel.text = err;
          }];
+ 
+    /*
+     [Conductrics decisionsFromAgent:@"ios-example-agent-multi" withChoices:@"a,b/c,d"
+         completionHandler: ^(NSDictionary *decisions, NSString *err) {
+             NSLog(@"Decisions are '%@' - error: %@ (null is good)", decisions, err);
+             self.decisionLabel.text = [decisions valueForKeyPath:@"decision-2.code"];
+             self.errorLabel.text = err;
+         }];
+     */
 }
 
 - (IBAction)sendRewardGesture:(id)sender {

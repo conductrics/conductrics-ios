@@ -16,8 +16,10 @@
 {
     // Normal setup of Conductrics object
     self.conductrics = [[ConductricsAPI alloc] initWithOwner: @"nate" apiKey: @"UKICgZRAnfTwnePY"];
+
     // Optional / not generally used
     // conductrics.baseUrl = @"http://test.conductrics.com:81"; // to use a custom/colo/prerelease Conductrics server
+    // self.conductrics.sessionId = nil; // to use a different session identifier with each launch
     
     // Override point for customization after application launch.
     return YES;
