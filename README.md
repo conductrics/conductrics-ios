@@ -304,7 +304,6 @@ Copied and pasted from ConductricsAPI.h:
 
 ### Not Yet Implemented / TODO / Ideas for future versions
 
-- Support for multiple decisions (for 'multivariate' tests/optimizations)
 - Ability to optionally pass in targeting segment or targeting features
 - Ability to enable passing along the device's lat/long for geo targeting
 - Local storage of decision (either ephemeral or persisted) instead of going over the wire each time
