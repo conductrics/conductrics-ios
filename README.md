@@ -35,7 +35,7 @@ Sign up for a developer account at http://conductrics.com if you don't have one 
 
 *(These instructions were correct as of XCode 4.5.2.)*
 
-1. Grab the code from Github, and locate the [ConductricsAPI.h](./ConductricsAPI/ConductricsAPI.h) and [ConductricsAPI.m](./ConductricsAPI/ConductricsAPI.m) files in your Finder.
+1. Grab the code from Github, and locate the **ConductricsAPI.h** and **ConductricsAPI.m** files in your Finder.
 2. Open the XCode project that you'd like to use the wrapper in, and make sure the project is visible in the Project Navigator (Cmd-1).
 3. Drag the files from the Finder and drop them on your project in the Project Navigator. You should see a dialog that says "Choose options for adding these files". You can accept the default settings (the "Copy items into destination" option unchecked, and the "Create groups for any added folders" option selected) and click Finish.
 
@@ -257,7 +257,7 @@ Let us know if you feel the scope of this wrapper should be expanded to include 
 
 # ConductricsAPI Wrapper Reference
 
-Copied and pasted from [ConductricsAPI.h](./ConductricsAPI/ConductricsAPI.h):
+Copied and pasted from ConductricsAPI.h:
 
 ```objective-c
 @property (nonatomic, strong) NSString *apiKey; // provided via initializer
