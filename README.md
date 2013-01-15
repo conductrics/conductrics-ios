@@ -144,11 +144,9 @@ To use multiple decision points, use **decisionFromAgent:withChoices:atPoint**, 
 ```
 
 ###### Using Multiple Decisions
-Sometimes you want to make more than one decision at the same moment. People often call this a **Multivariate** or MVT type scenario.
+Sometimes you want to make more than one decision at the same moment. Perhaps you want to try out some different colors of something, and also some different sizes. People often call this a **Multivariate** or MVT type scenario.
 
-To use multiple decisions in the same point, use **decisionsFromAgent:** (note the "decisions" rather than "decision" in the name there).
-
-Rather than expressing your choices as a simple comma-separated list as we saw earlier, instead use the form "name:choice,choice/name:choice,choice" as shown below. (We realize that the notation looks a bit odd in this context, but we are using it here to retain parity with the underlying HTTP API -- feedback is welcome on this point.) 
+To use multiple decisions in the same point, use **decisionsFromAgent:** (note the "decisions" rather than "decision" in the name). Rather than expressing your choices as a simple comma-separated list as we saw earlier, instead use the form "name:choice,choice/name:choice,choice" as shown below. (We realize that the notation looks a bit odd in this context, but we are using it here to retain parity with the underlying HTTP API -- feedback is welcome on this point.) 
 
 The completionHandler will be passed a NSDictionary (rather than a single NSString). The dictionary will contain a sub-object for each decision, keyed by the decision code. Each sub-object will contain a **code**, which is an NSString you can use to adjust your app accordingly.
 
@@ -161,8 +159,6 @@ The completionHandler will be passed a NSDictionary (rather than a single NSStri
         // Do whatever is appropriate...
     }];
 ```
-
-Note that 
 
 If the wrapper can't reach the Conductrics server (see Error Handling and Timeouts above), it will parse withChoices string to construct an appropriate "fallback" object, which will be passed to your completionHandler as if it had been made normally over the wire.
 
