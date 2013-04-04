@@ -70,7 +70,7 @@ First, make up an **agent code** to talk to our API with. We're using "ios-examp
 
 Now call **decisionFromAgent:withChoices:** to get a decision from Conductrics. 
 
-The key thing you'll provide is a list of choices. Each time you ask for a decision, you'll get back one of the choices from the list. At first, it's just a random selection. But in the background, Conductrics will be keeping track of which choices are most effective for various users, and can begin favoring the "winning" choice more often as it gains more data. There's more info about all that stuff at http://conducrics.com.
+The key thing you'll provide is a list of choices. Each time you ask for a decision, you'll get back one of the choices from the list. At first, it's just a random selection. But in the background, Conductrics will be keeping track of which choices are most effective for various users, and can begin favoring the "winning" choice more often as it gains more data. There's more info about all that stuff at http://conductrics.com.
 
 For instance, let's say there's something new about your application you want to try out. Let's think of it as an "a/b" test, where "a" is to do things the old way, and "b" is to do things the new way. So, we provide the list choices as the commma-separated string "a,b" like so:
 
@@ -121,7 +121,7 @@ Usually this behavior is preferable to ensure an experience that doesn't keep "c
 
 ##### "Pausing" the agent so you can test a particular choice
 
-You might want to "lock" the agent on the Conducrics side so that you can test out the "a" or "b" experience explicitly (or show it to a client, UAT, etc).  You can log into the Conductrics admin console and use the Stop/Pause Agent feature to temporarily "hard-code" the agent to always return "a" or "b" or whatever. 
+You might want to "lock" the agent on the Conductrics side so that you can test out the "a" or "b" experience explicitly (or show it to a client, UAT, etc).  You can log into the Conductrics admin console and use the Stop/Pause Agent feature to temporarily "hard-code" the agent to always return "a" or "b" or whatever. 
 
 Just keep in mind that this will affect all users that hit the agent (there's no facility right now to pause selectively for certain IP's or device IDs--would that be useful to you?).
 
