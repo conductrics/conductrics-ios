@@ -19,6 +19,10 @@
 
 @implementation ConductricsAPI
 
+
+NSString *const STATUS_OK = @"ok";
+NSString *const STATUS_PROVISIONAL = @"p";
+
 @synthesize baseUrl;
 @synthesize apiKey;
 @synthesize ownerCode;
@@ -44,9 +48,8 @@
     }
     return self;
 }
-
 // Special setter for sessionId - if set to an explicit nil, create a UUID
--(void)setSessionId:(NSString *)newId {
+- (void)setSessionId:(NSString *)newId {
     if (newId == nil) {
         sessionId = [[[NSUUID alloc] init] UUIDString];
     } else {
@@ -54,25 +57,75 @@
     }
 }
 
-// API for Decisions
-// simplest case - all you know is the agent code
-- (void)decisionFromAgent:(NSString *)agentCode completionHandler:(void (^)(NSString *decision, NSString *err))callbackBlock {
-    [self decisionFromAgent:agentCode withChoices:nil atPoint:nil completionHandler:callbackBlock];
+- (void)decisionFromAgent:(NSString *)agentCode
+        completionHandler:(void (^)(NSString *decision, NSString *err))callbackBlock {
+    [self decisionFromAgent:agentCode
+                withChoices:nil
+                    atPoint:nil
+                     status:STATUS_OK
+          completionHandler:callbackBlock];
 }
-// most typical case - you know the agent code and the choices you expect
-- (void)decisionFromAgent:(NSString *)agentCode withChoices:(NSString *)choices completionHandler:(void (^)(NSString *decision, NSString *err))callbackBlock {
-    [self decisionFromAgent:agentCode withChoices:choices atPoint:nil completionHandler:callbackBlock];
+- (void)decisionFromAgent:(NSString *)agentCode
+                   status:(NSString *)status
+        completionHandler:(void (^)(NSString *decision, NSString *err))callbackBlock {
+    [self decisionFromAgent:agentCode
+                withChoices:nil
+                    atPoint:nil
+                     status:status
+          completionHandler:callbackBlock];
 }
-// "full monty" version, used internally by the shortcut versions
-- (void)decisionFromAgent:(NSString *)agentCode withChoices:(NSString *)choices atPoint:(NSString *)pointCode completionHandler:(void (^)(NSString *decision, NSString *err))callbackBlock {
+
+// typical case - you know the agent code and the choices you expect
+- (void)decisionFromAgent:(NSString *)agentCode
+              withChoices:(NSString *)choices
+        completionHandler:(void (^)(NSString *decision, NSString *err))callbackBlock {
+    [self decisionFromAgent:agentCode
+                withChoices:choices
+                    atPoint:nil
+                     status:STATUS_OK
+          completionHandler:callbackBlock];
+}
+// typical case - with provisional
+- (void)decisionFromAgent:(NSString *)agentCode
+              withChoices:(NSString *)choices
+                   status:(NSString *)status
+        completionHandler:(void (^)(NSString *decision, NSString *err))callbackBlock {
+    [self decisionFromAgent:agentCode
+                withChoices:choices
+                    atPoint:nil
+                     status:status
+          completionHandler:callbackBlock];
+}
+// - verbose case - choices, and point
+- (void)decisionFromAgent:(NSString *)agentCode
+              withChoices:(NSString *)choices
+                  atPoint:(NSString *)pointCode
+        completionHandler:(void (^)(NSString *decision, NSString *err))callbackBlock {
+    [self decisionFromAgent:agentCode
+                withChoices:choices
+                    atPoint:pointCode
+                     status:STATUS_OK
+          completionHandler:callbackBlock];
+}
+// - "full monty" version, used internally by the shortcut versions
+- (void)decisionFromAgent:(NSString *)agentCode
+              withChoices:(NSString *)choices
+                  atPoint:(NSString *)pointCode
+                   status:(NSString *)status
+        completionHandler:(void (^)(NSString *decision, NSString *err))callbackBlock {
     
     // Compose url to talk to conductrics server
     NSMutableString *urlString = [NSMutableString stringWithFormat:@"%@/%@/%@/decision", baseUrl, ownerCode, agentCode];
     if (choices != nil) [urlString appendFormat:@"/%@", choices];
-    
+
     // Set up url request with conductrics-specific headers
     NSMutableURLRequest *request = [self urlRequestForURL:urlString];
-    if (pointCode != nil) [request setValue:pointCode forHTTPHeaderField: @"x-mpath-point"];
+    if (pointCode != nil)
+        [request setValue:pointCode forHTTPHeaderField: @"x-mpath-point"];
+    
+    // Set the "status" option, to support provisional selections
+    if (status != nil)
+        [request setValue:status forHTTPHeaderField:@"x-mpath-status"];
     
     [self fireUrlRequest:request
           requestHandler: ^(NSDictionary *returned, NSString *err) {
@@ -90,18 +143,54 @@
           }];
 }
 
-- (void)decisionsFromAgent:(NSString *)agentCode withChoices:(NSString *)choices completionHandler:(void (^)(NSDictionary *decisions, NSString *err))callbackBlock {
-    return [self decisionsFromAgent:agentCode withChoices:choices atPoint:nil completionHandler:callbackBlock];
+- (void)decisionsFromAgent:(NSString *)agentCode
+               withChoices:(NSString *)choices
+         completionHandler:(void (^)(NSDictionary *decisions, NSString *err))callbackBlock {
+    return [self decisionsFromAgent:agentCode
+                        withChoices:choices
+                            atPoint:nil
+                             status:STATUS_OK
+                  completionHandler:callbackBlock];
 }
-- (void)decisionsFromAgent:(NSString *)agentCode withChoices:(NSString *)choices atPoint:(NSString *)pointCode completionHandler:(void (^)(NSDictionary *decisions, NSString *err))callbackBlock {
+- (void)decisionsFromAgent:(NSString *)agentCode
+               withChoices:(NSString *)choices
+                    status:(NSString *)status
+         completionHandler:(void (^)(NSDictionary *decisions, NSString *err))callbackBlock {
+    return [self decisionsFromAgent:agentCode
+                        withChoices:choices
+                            atPoint:nil
+                             status:status
+                  completionHandler:callbackBlock];
+}
+- (void)decisionsFromAgent:(NSString *)agentCode
+               withChoices:(NSString *)choices
+                   atPoint:(NSString *)point
+         completionHandler:(void (^)(NSDictionary *decisions, NSString *err))callbackBlock {
+    return [self decisionsFromAgent:agentCode
+                        withChoices:choices
+                            atPoint:point
+                             status:STATUS_OK
+                  completionHandler:callbackBlock];
+}
+- (void)decisionsFromAgent:(NSString *)agentCode
+               withChoices:(NSString *)choices
+                   atPoint:(NSString *)pointCode
+                    status:(NSString *)status
+         completionHandler:(void (^)(NSDictionary *decisions, NSString *err))callbackBlock {
 
     // Compose url to talk to conductrics server
     NSMutableString *urlString = [NSMutableString stringWithFormat:@"%@/%@/%@/decisions", baseUrl, ownerCode, agentCode];
-    if (choices != nil) [urlString appendFormat:@"/%@", choices];
+    if (choices != nil)
+        [urlString appendFormat:@"/%@", choices];
     
     // Set up url request with conductrics-specific headers
     NSMutableURLRequest *request = [self urlRequestForURL:urlString];
-    if (pointCode != nil) [request setValue:pointCode forHTTPHeaderField: @"x-mpath-point"];
+    if (pointCode != nil)
+        [request setValue:pointCode forHTTPHeaderField: @"x-mpath-point"];
+
+    // Set the "status" option, to support provisional selections
+    if (status != nil)
+        [request setValue:status forHTTPHeaderField:@"x-mpath-status"];
     
     [self fireUrlRequest:request
           requestHandler: ^(NSDictionary *returned, NSString *err) {
@@ -116,7 +205,7 @@
                           [fallbackDecisions setValue:[NSDictionary dictionaryWithObject:fallbackDecision forKey:@"code"] forKey:decisionParts[0]];
                       } else {
                           NSString *fallbackDecision = [decisionParts[0] componentsSeparatedByString:@","][0];
-                          NSString *decisionCode = [NSString stringWithFormat:@"decision-%d", [[fallbackDecisions allKeys] count] + 1];
+                          NSString *decisionCode = [NSString stringWithFormat:@"decision-%lu", [[fallbackDecisions allKeys] count] + 1];
                           [fallbackDecisions setValue:[NSDictionary dictionaryWithObject:fallbackDecision forKey:@"code"] forKey:decisionCode];
                       }
                   }
@@ -199,15 +288,10 @@
 
 // Helper to fire off an HTTP request, and return parsed JSON
 -(void)fireUrlRequest:(NSURLRequest *)request requestHandler:(void (^)(NSDictionary *returned, NSString *err))callbackBlock {
-    
-    // Fire off the http call
-    [NSURLConnection sendAsynchronousRequest:request queue:[NSOperationQueue currentQueue]
-     // When the http call returns
-                           completionHandler:
-     ^(NSURLResponse *res, NSData *data, NSError *err) {
-         
-         // Bail if weren't able to communicate with the server
-         if (err != nil) {
+
+    NSURLSessionTask *task = [[NSURLSession sharedSession] dataTaskWithRequest:request
+     completionHandler:^(NSData *data, NSURLResponse *response, NSError *err) {
+        if (err != nil) {
              NSString *errorMsg = [NSString stringWithFormat:@"Network error: %@", [err localizedDescription]];
              return callbackBlock(nil, errorMsg);
          }
@@ -229,8 +313,10 @@
          }
          
          // Yay, success!
-         return callbackBlock(responseObject, nil); 
-     }];
+         return callbackBlock(responseObject, nil);
+    }];
+    [task resume];
+
 }
 
 

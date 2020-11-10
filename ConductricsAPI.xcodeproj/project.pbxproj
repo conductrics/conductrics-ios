@@ -25,10 +25,19 @@
 		43AE7EBF16A0A2D3001B64CF /* Foundation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 43AE7EBE16A0A2D3001B64CF /* Foundation.framework */; };
 		43AE7EC616A0A2D3001B64CF /* ConductricsAPI.m in Sources */ = {isa = PBXBuildFile; fileRef = 43AE7EC516A0A2D3001B64CF /* ConductricsAPI.m */; };
 		43AE7ECD16A0A42C001B64CF /* ConductricsAPI.h in Headers */ = {isa = PBXBuildFile; fileRef = 43AE7EC316A0A2D3001B64CF /* ConductricsAPI.h */; settings = {ATTRIBUTES = (Public, ); }; };
+		88A269302559E79300E3255C /* Tests.m in Sources */ = {isa = PBXBuildFile; fileRef = 88A2692F2559E79300E3255C /* Tests.m */; };
+		88A269322559E79300E3255C /* libConductricsAPI.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 43AE7EBB16A0A2D3001B64CF /* libConductricsAPI.a */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
 		43AE7ED316A0AA64001B64CF /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = 43AE7EB216A0A2D3001B64CF /* Project object */;
+			proxyType = 1;
+			remoteGlobalIDString = 43AE7EBA16A0A2D3001B64CF;
+			remoteInfo = ConductricsAPI;
+		};
+		88A269332559E79300E3255C /* PBXContainerItemProxy */ = {
 			isa = PBXContainerItemProxy;
 			containerPortal = 43AE7EB216A0A2D3001B64CF /* Project object */;
 			proxyType = 1;
@@ -56,6 +65,9 @@
 		43AE7EC316A0A2D3001B64CF /* ConductricsAPI.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = ConductricsAPI.h; sourceTree = "<group>"; };
 		43AE7EC516A0A2D3001B64CF /* ConductricsAPI.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = ConductricsAPI.m; sourceTree = "<group>"; };
 		43AE7F1516A34ADE001B64CF /* README.md */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = README.md; sourceTree = "<group>"; };
+		88A2692D2559E79300E3255C /* Tests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = Tests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
+		88A2692F2559E79300E3255C /* Tests.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = Tests.m; sourceTree = "<group>"; };
+		88A269312559E79300E3255C /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -67,6 +79,14 @@
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
+		88A2692A2559E79300E3255C /* Frameworks */ = {
+			isa = PBXFrameworksBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				88A269322559E79300E3255C /* libConductricsAPI.a in Frameworks */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
 /* End PBXFrameworksBuildPhase section */
 
 /* Begin PBXGroup section */
@@ -75,6 +95,7 @@
 			children = (
 				43AE7F1516A34ADE001B64CF /* README.md */,
 				43AE7EC016A0A2D3001B64CF /* ConductricsAPI */,
+				88A2692E2559E79300E3255C /* Tests */,
 				43AE7EBD16A0A2D3001B64CF /* Frameworks */,
 				43AE7EBC16A0A2D3001B64CF /* Products */,
 			);
@@ -84,6 +105,7 @@
 			isa = PBXGroup;
 			children = (
 				43AE7EBB16A0A2D3001B64CF /* libConductricsAPI.a */,
+				88A2692D2559E79300E3255C /* Tests.xctest */,
 			);
 			name = Products;
 			sourceTree = "<group>";
@@ -112,6 +134,15 @@
 				43AE7EC216A0A2D3001B64CF /* ConductricsAPI-Prefix.pch */,
 			);
 			name = "Supporting Files";
+			sourceTree = "<group>";
+		};
+		88A2692E2559E79300E3255C /* Tests */ = {
+			isa = PBXGroup;
+			children = (
+				88A2692F2559E79300E3255C /* Tests.m */,
+				88A269312559E79300E3255C /* Info.plist */,
+			);
+			path = Tests;
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */
@@ -147,20 +178,47 @@
 			productReference = 43AE7EBB16A0A2D3001B64CF /* libConductricsAPI.a */;
 			productType = "com.apple.product-type.library.static";
 		};
+		88A2692C2559E79300E3255C /* Tests */ = {
+			isa = PBXNativeTarget;
+			buildConfigurationList = 88A269352559E79300E3255C /* Build configuration list for PBXNativeTarget "Tests" */;
+			buildPhases = (
+				88A269292559E79300E3255C /* Sources */,
+				88A2692A2559E79300E3255C /* Frameworks */,
+				88A2692B2559E79300E3255C /* Resources */,
+			);
+			buildRules = (
+			);
+			dependencies = (
+				88A269342559E79300E3255C /* PBXTargetDependency */,
+			);
+			name = Tests;
+			productName = Tests;
+			productReference = 88A2692D2559E79300E3255C /* Tests.xctest */;
+			productType = "com.apple.product-type.bundle.unit-test";
+		};
 /* End PBXNativeTarget section */
 
 /* Begin PBXProject section */
 		43AE7EB216A0A2D3001B64CF /* Project object */ = {
 			isa = PBXProject;
 			attributes = {
+				DefaultBuildSystemTypeForWorkspace = Original;
 				LastUpgradeCheck = 0450;
 				ORGANIZATIONNAME = Conductrics;
+				TargetAttributes = {
+					88A2692C2559E79300E3255C = {
+						CreatedOnToolsVersion = 12.1;
+						DevelopmentTeam = MFPHJ6T7VZ;
+						ProvisioningStyle = Automatic;
+					};
+				};
 			};
 			buildConfigurationList = 43AE7EB516A0A2D3001B64CF /* Build configuration list for PBXProject "ConductricsAPI" */;
 			compatibilityVersion = "Xcode 3.2";
 			developmentRegion = English;
 			hasScannedForEncodings = 0;
 			knownRegions = (
+				English,
 				en,
 			);
 			mainGroup = 43AE7EB016A0A2D3001B64CF;
@@ -170,9 +228,20 @@
 			targets = (
 				43AE7EBA16A0A2D3001B64CF /* ConductricsAPI */,
 				43AE7ECF16A0AA4F001B64CF /* Framework */,
+				88A2692C2559E79300E3255C /* Tests */,
 			);
 		};
 /* End PBXProject section */
+
+/* Begin PBXResourcesBuildPhase section */
+		88A2692B2559E79300E3255C /* Resources */ = {
+			isa = PBXResourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+/* End PBXResourcesBuildPhase section */
 
 /* Begin PBXShellScriptBuildPhase section */
 		43AE7ECE16A0A4E3001B64CF /* Prepare Framework */ = {
@@ -214,6 +283,14 @@
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
+		88A269292559E79300E3255C /* Sources */ = {
+			isa = PBXSourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				88A269302559E79300E3255C /* Tests.m in Sources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
 /* End PBXSourcesBuildPhase section */
 
 /* Begin PBXTargetDependency section */
@@ -221,6 +298,11 @@
 			isa = PBXTargetDependency;
 			target = 43AE7EBA16A0A2D3001B64CF /* ConductricsAPI */;
 			targetProxy = 43AE7ED316A0AA64001B64CF /* PBXContainerItemProxy */;
+		};
+		88A269342559E79300E3255C /* PBXTargetDependency */ = {
+			isa = PBXTargetDependency;
+			target = 43AE7EBA16A0A2D3001B64CF /* ConductricsAPI */;
+			targetProxy = 88A269332559E79300E3255C /* PBXContainerItemProxy */;
 		};
 /* End PBXTargetDependency section */
 
@@ -307,6 +389,7 @@
 		43AE7ED116A0AA4F001B64CF /* Debug */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
+				IPHONEOS_DEPLOYMENT_TARGET = 6.0;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 			};
 			name = Debug;
@@ -314,7 +397,110 @@
 		43AE7ED216A0AA4F001B64CF /* Release */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
+				IPHONEOS_DEPLOYMENT_TARGET = 6.0;
 				PRODUCT_NAME = "$(TARGET_NAME)";
+			};
+			name = Release;
+		};
+		88A269362559E79300E3255C /* Debug */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				CLANG_ANALYZER_NONNULL = YES;
+				CLANG_ANALYZER_NUMBER_OBJECT_CONVERSION = YES_AGGRESSIVE;
+				CLANG_CXX_LANGUAGE_STANDARD = "gnu++14";
+				CLANG_ENABLE_MODULES = YES;
+				CLANG_ENABLE_OBJC_WEAK = YES;
+				CLANG_WARN_BLOCK_CAPTURE_AUTORELEASING = YES;
+				CLANG_WARN_BOOL_CONVERSION = YES;
+				CLANG_WARN_COMMA = YES;
+				CLANG_WARN_CONSTANT_CONVERSION = YES;
+				CLANG_WARN_DEPRECATED_OBJC_IMPLEMENTATIONS = YES;
+				CLANG_WARN_DIRECT_OBJC_ISA_USAGE = YES_ERROR;
+				CLANG_WARN_DOCUMENTATION_COMMENTS = YES;
+				CLANG_WARN_ENUM_CONVERSION = YES;
+				CLANG_WARN_INFINITE_RECURSION = YES;
+				CLANG_WARN_INT_CONVERSION = YES;
+				CLANG_WARN_NON_LITERAL_NULL_CONVERSION = YES;
+				CLANG_WARN_OBJC_IMPLICIT_RETAIN_SELF = YES;
+				CLANG_WARN_OBJC_LITERAL_CONVERSION = YES;
+				CLANG_WARN_OBJC_ROOT_CLASS = YES_ERROR;
+				CLANG_WARN_QUOTED_INCLUDE_IN_FRAMEWORK_HEADER = YES;
+				CLANG_WARN_RANGE_LOOP_ANALYSIS = YES;
+				CLANG_WARN_STRICT_PROTOTYPES = YES;
+				CLANG_WARN_SUSPICIOUS_MOVE = YES;
+				CLANG_WARN_UNGUARDED_AVAILABILITY = YES_AGGRESSIVE;
+				CLANG_WARN_UNREACHABLE_CODE = YES;
+				CODE_SIGN_STYLE = Automatic;
+				DEBUG_INFORMATION_FORMAT = dwarf;
+				DEVELOPMENT_TEAM = MFPHJ6T7VZ;
+				ENABLE_STRICT_OBJC_MSGSEND = YES;
+				ENABLE_TESTABILITY = YES;
+				GCC_C_LANGUAGE_STANDARD = gnu11;
+				GCC_NO_COMMON_BLOCKS = YES;
+				GCC_WARN_64_TO_32_BIT_CONVERSION = YES;
+				GCC_WARN_ABOUT_RETURN_TYPE = YES_ERROR;
+				GCC_WARN_UNDECLARED_SELECTOR = YES;
+				GCC_WARN_UNINITIALIZED_AUTOS = YES_AGGRESSIVE;
+				GCC_WARN_UNUSED_FUNCTION = YES;
+				INFOPLIST_FILE = Tests/Info.plist;
+				IPHONEOS_DEPLOYMENT_TARGET = 14.1;
+				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks @loader_path/Frameworks";
+				MTL_ENABLE_DEBUG_INFO = INCLUDE_SOURCE;
+				MTL_FAST_MATH = YES;
+				PRODUCT_BUNDLE_IDENTIFIER = com.conductrics.Tests;
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				TARGETED_DEVICE_FAMILY = "1,2";
+			};
+			name = Debug;
+		};
+		88A269372559E79300E3255C /* Release */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				CLANG_ANALYZER_NONNULL = YES;
+				CLANG_ANALYZER_NUMBER_OBJECT_CONVERSION = YES_AGGRESSIVE;
+				CLANG_CXX_LANGUAGE_STANDARD = "gnu++14";
+				CLANG_ENABLE_MODULES = YES;
+				CLANG_ENABLE_OBJC_WEAK = YES;
+				CLANG_WARN_BLOCK_CAPTURE_AUTORELEASING = YES;
+				CLANG_WARN_BOOL_CONVERSION = YES;
+				CLANG_WARN_COMMA = YES;
+				CLANG_WARN_CONSTANT_CONVERSION = YES;
+				CLANG_WARN_DEPRECATED_OBJC_IMPLEMENTATIONS = YES;
+				CLANG_WARN_DIRECT_OBJC_ISA_USAGE = YES_ERROR;
+				CLANG_WARN_DOCUMENTATION_COMMENTS = YES;
+				CLANG_WARN_ENUM_CONVERSION = YES;
+				CLANG_WARN_INFINITE_RECURSION = YES;
+				CLANG_WARN_INT_CONVERSION = YES;
+				CLANG_WARN_NON_LITERAL_NULL_CONVERSION = YES;
+				CLANG_WARN_OBJC_IMPLICIT_RETAIN_SELF = YES;
+				CLANG_WARN_OBJC_LITERAL_CONVERSION = YES;
+				CLANG_WARN_OBJC_ROOT_CLASS = YES_ERROR;
+				CLANG_WARN_QUOTED_INCLUDE_IN_FRAMEWORK_HEADER = YES;
+				CLANG_WARN_RANGE_LOOP_ANALYSIS = YES;
+				CLANG_WARN_STRICT_PROTOTYPES = YES;
+				CLANG_WARN_SUSPICIOUS_MOVE = YES;
+				CLANG_WARN_UNGUARDED_AVAILABILITY = YES_AGGRESSIVE;
+				CLANG_WARN_UNREACHABLE_CODE = YES;
+				CODE_SIGN_STYLE = Automatic;
+				DEBUG_INFORMATION_FORMAT = "dwarf-with-dsym";
+				DEVELOPMENT_TEAM = MFPHJ6T7VZ;
+				ENABLE_NS_ASSERTIONS = NO;
+				ENABLE_STRICT_OBJC_MSGSEND = YES;
+				GCC_C_LANGUAGE_STANDARD = gnu11;
+				GCC_NO_COMMON_BLOCKS = YES;
+				GCC_WARN_64_TO_32_BIT_CONVERSION = YES;
+				GCC_WARN_ABOUT_RETURN_TYPE = YES_ERROR;
+				GCC_WARN_UNDECLARED_SELECTOR = YES;
+				GCC_WARN_UNINITIALIZED_AUTOS = YES_AGGRESSIVE;
+				GCC_WARN_UNUSED_FUNCTION = YES;
+				INFOPLIST_FILE = Tests/Info.plist;
+				IPHONEOS_DEPLOYMENT_TARGET = 14.1;
+				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks @loader_path/Frameworks";
+				MTL_ENABLE_DEBUG_INFO = NO;
+				MTL_FAST_MATH = YES;
+				PRODUCT_BUNDLE_IDENTIFIER = com.conductrics.Tests;
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				TARGETED_DEVICE_FAMILY = "1,2";
 			};
 			name = Release;
 		};
@@ -344,6 +530,15 @@
 			buildConfigurations = (
 				43AE7ED116A0AA4F001B64CF /* Debug */,
 				43AE7ED216A0AA4F001B64CF /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
+		};
+		88A269352559E79300E3255C /* Build configuration list for PBXNativeTarget "Tests" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				88A269362559E79300E3255C /* Debug */,
+				88A269372559E79300E3255C /* Release */,
 			);
 			defaultConfigurationIsVisible = 0;
 			defaultConfigurationName = Release;

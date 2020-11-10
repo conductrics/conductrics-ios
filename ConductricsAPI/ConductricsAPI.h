@@ -21,21 +21,59 @@
 - (id)initWithOwner:(NSString *)aOwnerCode apiKey:(NSString *)aApiKey;
 
 // API for Decisions
-// most typical case - you know the agent code and the choices you expect
-- (void)decisionFromAgent:(NSString *)agentCode withChoices:(NSString *)choices
-        completionHandler:(void (^)(NSString *decision, NSString *errn))callbackBlock;
-// simplest case - provide just the agent code (agent will use prior set of choices)
+
+// simplest case - provide just the agent code (agent will use prior/pre-defined choices)
 - (void)decisionFromAgent:(NSString *)agentCode
         completionHandler:(void (^)(NSString *decision, NSString *err))callbackBlock;
-// multi-decision-point case
-- (void)decisionFromAgent:(NSString *)agentCode withChoices:(NSString *)choices atPoint:(NSString *)pointCode
+- (void)decisionFromAgent:(NSString *)agentCode
+              status:(NSString *)status
         completionHandler:(void (^)(NSString *decision, NSString *err))callbackBlock;
+
+// most typical case - you know the agent code and the choices you expect
+- (void)decisionFromAgent:(NSString *)agentCode
+              withChoices:(NSString *)choices
+        completionHandler:(void (^)(NSString *decision, NSString *errn))callbackBlock;
+- (void)decisionFromAgent:(NSString *)agentCode
+              withChoices:(NSString *)choices
+                   status:(NSString *)status
+        completionHandler:(void (^)(NSString *decision, NSString *errn))callbackBlock;
+
+- (void)decisionFromAgent:(NSString *)agentCode
+              withChoices:(NSString *)choices
+                  atPoint:(NSString *)pointCode
+        completionHandler:(void (^)(NSString *decision, NSString *err))callbackBlock;
+
+// "full monty" version, used internally by the shortcut versions
+- (void)decisionFromAgent:(NSString *)agentCode
+              withChoices:(NSString *)choices
+                  atPoint:(NSString *)pointCode
+                   status:(NSString *)status
+        completionHandler:(void (^)(NSString *decision, NSString *err))callbackBlock;
+
 // multi-decisions case
-- (void)decisionsFromAgent:(NSString *)agentCode withChoices:(NSString *)choices
+- (void)decisionsFromAgent:(NSString *)agentCode
+               withChoices:(NSString *)choices
          completionHandler:(void (^)(NSDictionary *decisions, NSString *err))callbackBlock;
+- (void)decisionsFromAgent:(NSString *)agentCode
+               withChoices:(NSString *)choice
+                   status:(NSString *)status
+         completionHandler:(void (^)(NSDictionary *decisions, NSString *err))callbackBlock;
+
 // multi-decisions with point
-- (void)decisionsFromAgent:(NSString *)agentCode withChoices:(NSString *)choices atPoint:(NSString *)pointCode
+- (void)decisionsFromAgent:(NSString *)agentCode
+               withChoices:(NSString *)choices
+                   atPoint:(NSString *)pointCode
          completionHandler:(void (^)(NSDictionary *decisions, NSString *err))callbackBlock;
+
+// the "full monty" of multi-decisions, used by the others
+- (void)decisionsFromAgent:(NSString *)agentCode
+               withChoices:(NSString *)choices
+                   atPoint:(NSString *)pointCode
+                    status:(NSString *)status
+         completionHandler:(void (^)(NSDictionary *decisions, NSString *err))callbackBlock;
+
+
+
 
 // API for Rewards
 // simplest case - all you know is agent code
